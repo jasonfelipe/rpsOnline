@@ -1,0 +1,14 @@
+* {
+background-color: white;
+color: blueviolet;
+
+
+}
+
+#chatbox {
+    overflow: auto;
+    border: 10px round black; 
+    margin: 10px;
+    width: 400px;
+    height: 200px;
+}
