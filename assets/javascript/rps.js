@@ -1,4 +1,4 @@
-//Rock Paper Scissors
+    //Rock Paper Scissors
 //With online chat.
 
 //Chat is user input.
@@ -8,9 +8,20 @@
 
 
 //------------------------------
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAQwZRVd6njWTRe6y7c_jIoG3_O_OW8P3Q",
+    authDomain: "bootcampactivities.firebaseapp.com",
+    databaseURL: "https://bootcampactivities.firebaseio.com",
+    projectId: "bootcampactivities",
+    storageBucket: "bootcampactivities.appspot.com",
+    messagingSenderId: "159132451740"
+  };
+  firebase.initializeApp(config);
 
 //-------------Variables--------------
 
+var database = firebase.database(); 
 
 //User Input
 var player1Choice;
@@ -53,5 +64,14 @@ $('#chatInput').click(function(e){
     var chatText = $('#chatText').val();
 
     $('#chatbox').append("<br>" + "Player 1 Says: " + chatText);
+
+});
+
+//Snapshotting the Chatbox
+database.ref().on("value", function (snapshot){
+    $('#chatbox').text(snapshot.val().chatText)
+
+}, function (errorObject){
+    console.log("Errors handled: " + errorObject.code);
 
 });
