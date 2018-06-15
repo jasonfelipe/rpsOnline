@@ -13,12 +13,12 @@
 //------------------------------
   // Initialize Firebase
   var config = {
-    apiKey: "AIzaSyBVpCBZRYe0U7o_W1KQZv12Qq6QXztJ97U",
-    authDomain: "rpschat-e5a37.firebaseapp.com",
-    databaseURL: "https://rpschat-e5a37.firebaseio.com",
-    projectId: "rpschat-e5a37",
-    storageBucket: "rpschat-e5a37.appspot.com",
-    messagingSenderId: "13079308605"
+    apiKey: "AIzaSyBNtVyMKY8oSJe_wQc0KtbJtajG0sz7-nQ",
+    authDomain: "rpsonlinebase.firebaseapp.com",
+    databaseURL: "https://rpsonlinebase.firebaseio.com",
+    projectId: "rpsonlinebase",
+    storageBucket: "",
+    messagingSenderId: "314201387785"
   };
   firebase.initializeApp(config);
 
@@ -58,7 +58,8 @@ var player2lossesCount = 0;
 var draw = 0;
 
 //Game doesn't start until 2 players show up
-$(".hands").hide();
+
+$("#gamebox").hide();
 
 
 //------Connection Status--------
@@ -97,9 +98,8 @@ database.ref().once("value", function(snap) {
 
 
 $('#playerOne').on("click",function(){
-    console.log("hey this is player one")
     $('#instructions').text("You are Player One")
-    $(".hands").show();
+    $("#gamebox").show();
 
     //fix this so it appends to the box when
     $('#chatbox').append("<br>" + "Player One has joined")
@@ -108,9 +108,8 @@ $('#playerOne').on("click",function(){
 });
 
 $('#playerTwo').on("click", function(){
-    console.log("hey this is player two")
     $('#instructions').text("You are Player Two")
-    $(".hands").show();
+    $("#gamebox").show();
 
     //fix this so it appends to the box
     $('#chatbox').append("<br>" + "Player Two has joined")
@@ -118,6 +117,10 @@ $('#playerTwo').on("click", function(){
 
 });
 
+database.ref().on("value", function(anyPlayer){
+    console.log("There is a player here!")
+
+});
 
 //-------The Hands----------
 
@@ -175,6 +178,8 @@ $('.hands').on("click", function(){
 
 
 //----------Chat Box----------
+
+//takes the input and pushes it into the database
 $('#chatInput').click(function(e){
     e.preventDefault();
 
@@ -196,6 +201,7 @@ database.ref().on("value", function (snapshot){
 
 });
 
+//Putting the database text into the chatbox.
 database.ref().on("child_added",function(childSnapshot){
     console.log(childSnapshot.val().chatText)
     $('#chatbox').append("<br>"+ childSnapshot.val().chatText)
