@@ -24,11 +24,19 @@ align-content: center;
 }
 
 #instructions {
-    color: red;
+    color: green;
 }
 
 .row {
     border: 2px solid black;
     padding: 10px;
+}
+
+#player1score{
+    color: red;
+}
+
+#player2score{
+    color:blue;
 }
 
