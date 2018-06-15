@@ -1,13 +1,19 @@
-    //Rock Paper Scissors
+//Rock Paper Scissors
 //With online chat.
 
-//Chat is user input.
-//chat box is a box... but...
-//text is appended but the window should be scrollable
 
-//need to delete player infomation on refresh(?)
-//need to get player data
-//
+
+
+
+
+
+
+//1.need to get player data (are u player 1 or 2?)
+//2.need to delete player infomation on refresh(?)
+//3.Need to alert player when other player disconnects/leaves
+//4.need to empty database when player leaves
+//5.Make and test RPS logic
+
 
 
 //------------------------------
@@ -26,12 +32,13 @@
 
 var database = firebase.database(); 
 var playerConnection = database.ref("/playerConnection");
+var chatdata = database.ref("/chatdata");
 
 //This is a firebase thing, it manages if a user is connected.
 var isConnected = database.ref(".info/connected");
 
 //User Stuff
-var player1 = ("/players/1")
+var player1 = ("/players/1") //stores connection info?
 var player2 = ("/players/2")
 var player1Turn = false;
 var player2Turn = false;
@@ -40,7 +47,7 @@ var player2View = false;
 
 //Choices
 var choices = ["rock", "paper", "scissors"];
-var player1choice = ("/player1choice");
+var player1choice = ("/player1choice"); //stores player choices
 var player2choice = ("/player2choice");
 var player1Picked = null;
 var player2Picked = null;
@@ -67,11 +74,12 @@ $("#gamebox").hide();
 //Info about this is in the variable section,
 //but let me go over it again:
 //checks if there is a connection value and pushes it to the database
-//when it disconnects the value is changed and the value is removed
+//when a player disconnects the value is changed and the value is removed
 isConnected.on("value", function(snap) {
-	if(snap.val()) {
-		var playerConnect = playerConnection.push(true);
-		playerConnect.onDisconnect().remove();
+	if(snap.val() === true) {
+        var playerConnect = playerConnection.push(true);
+        console.log("You are connected!")
+        playerConnect.onDisconnect().remove();
         
 	}
 
@@ -100,6 +108,9 @@ database.ref().once("value", function(snap) {
 $('#playerOne').on("click",function(){
     $('#instructions').text("You are Player One")
     $("#gamebox").show();
+    $('#playerChoice').text("Choose your hand!");
+
+    //Some code that turns user into player1
 
     //fix this so it appends to the box when
     $('#chatbox').append("<br>" + "Player One has joined")
@@ -110,6 +121,9 @@ $('#playerOne').on("click",function(){
 $('#playerTwo').on("click", function(){
     $('#instructions').text("You are Player Two")
     $("#gamebox").show();
+    $('#playerChoice').text("Choose your hand!");
+    
+    //Some code that turns user into player2
 
     //fix this so it appends to the box
     $('#chatbox').append("<br>" + "Player Two has joined")
@@ -183,14 +197,24 @@ $('.hands').on("click", function(){
 $('#chatInput').click(function(e){
     e.preventDefault();
 
+
+//Makes a variable which chatText is the input the user does.
+
     var chatText = $('#chatText').val();
 
-    database.ref().push({
+//chatdata is the object which is pushed into our database, remember chatdata is our database.ref();
+    var chatlog = chatdata.push({ //chatlog is just the name of the variable we empty down below...
         chatText: chatText
     })
 
+    //when a player disconnects, the chatlog gets emptied. 
+    chatlog.onDisconnect().remove();
+
+    //When you submit/enter stuff in chat this empties out the field.
+    $('#chatText').val("");
 
 });
+
 
 //Snapshotting the Chatbox
 database.ref().on("value", function (snapshot){
@@ -202,10 +226,7 @@ database.ref().on("value", function (snapshot){
 });
 
 //Putting the database text into the chatbox.
-database.ref().on("child_added",function(childSnapshot){
-    console.log(childSnapshot.val().chatText)
+chatdata.on("child_added",function(childSnapshot){
     $('#chatbox').append("<br>"+ childSnapshot.val().chatText)
 
 })
-
-//questions: How to make player1 and player2?
