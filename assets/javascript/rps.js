@@ -229,4 +229,4 @@ database.ref().on("value", function (snapshot){
 chatdata.on("child_added",function(childSnapshot){
     $('#chatbox').append("<br>"+ childSnapshot.val().chatText)
 
-})
+});
