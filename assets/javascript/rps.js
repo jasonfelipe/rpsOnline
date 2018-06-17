@@ -2,12 +2,6 @@
 //With online chat.
 
 
-
-
-
-
-
-
 //1.need to get player data (are u player 1 or 2?)
 //2.need to delete player infomation on refresh(?)
 //3.Need to alert player when other player disconnects/leaves
@@ -16,21 +10,21 @@
 
 
 
-//------------------------------
-  // Initialize Firebase
-  var config = {
+//------------------------------------
+// Initialize Firebase
+var config = {
     apiKey: "AIzaSyBNtVyMKY8oSJe_wQc0KtbJtajG0sz7-nQ",
     authDomain: "rpsonlinebase.firebaseapp.com",
     databaseURL: "https://rpsonlinebase.firebaseio.com",
     projectId: "rpsonlinebase",
     storageBucket: "",
     messagingSenderId: "314201387785"
-  };
-  firebase.initializeApp(config);
+};
+firebase.initializeApp(config);
 
 //-------------Variables--------------
 
-var database = firebase.database(); 
+var database = firebase.database();
 var playerConnection = database.ref("/playerConnection");
 var chatdata = database.ref("/chatdata");
 
@@ -38,15 +32,17 @@ var chatdata = database.ref("/chatdata");
 var isConnected = database.ref(".info/connected");
 
 //User Stuff
-var player1 = ("/players/1") //stores connection info?
-var player2 = ("/players/2")
+var player1 = database.ref("/players/1"); //stores connection info
+var player2 = database.ref("/players/2");
 var player1Turn = false;
 var player2Turn = false;
 var player1View = false;
 var player2View = false;
 
 //Choices
-var choices = ["rock", "paper", "scissors"];
+var rock = 0;
+var paper = 1;
+var scissors = 2;
 var player1choice = ("/player1choice"); //stores player choices
 var player2choice = ("/player2choice");
 var player1Picked = null;
@@ -74,23 +70,28 @@ $("#gamebox").hide();
 //Info about this is in the variable section,
 //but let me go over it again:
 //checks if there is a connection value and pushes it to the database
-//when a player disconnects the value is changed and the value is removed
-isConnected.on("value", function(snap) {
-	if(snap.val() === true) {
+//when a player disconnects the value is removed
+isConnected.on("value", function (snap) {
+    if (snap.val() === true) {
         var playerConnect = playerConnection.push(true);
         console.log("You are connected!")
         playerConnect.onDisconnect().remove();
-        
-	}
+        player1.onDisconnect().remove();
+        player2.onDisconnect().remove();
 
-    
+
+    }
+
+
 });
 
 //Third player tries to join
-database.ref().once("value", function(snap) {
+database.ref().once("value", function (snap) {
 
-    if (snap.child("players/2").exists() === true && snap.child("players/1").exists() === true){
+    if (snap.child("players/2").exists() === true && snap.child("players/1").exists() === true) {
         $("#instructions").text("There are too many players! SORRY!")
+        $('#playerOne').hide();
+        $('#playerTwo').hide();
         return;
     }
 
@@ -105,34 +106,41 @@ database.ref().once("value", function(snap) {
 //also updates the chatbox saying if a player is connected
 
 
-$('#playerOne').on("click",function(){
+$('#playerOne').on("click", function () {
     $('#instructions').text("You are Player One")
     $("#gamebox").show();
     $('#playerChoice').text("Choose your hand!");
-
-    //Some code that turns user into player1
-
-    //fix this so it appends to the box when
     $('#chatbox').append("<br>" + "Player One has joined")
+    $('#playerOne').hide();
+    $('#playerTwo').hide();
 
+    database.ref("players/1").set(
+        "1",
+        console.log("Player 1 is here!")
+
+    );
 
 });
 
-$('#playerTwo').on("click", function(){
+$('#playerTwo').on("click", function () {
     $('#instructions').text("You are Player Two")
     $("#gamebox").show();
     $('#playerChoice').text("Choose your hand!");
-    
-    //Some code that turns user into player2
-
-    //fix this so it appends to the box
     $('#chatbox').append("<br>" + "Player Two has joined")
+    $('#playerOne').hide();
+    $('#playerTwo').hide();
+
+    database.ref("players/2").set(
+        "2",
+        console.log("Player 2 is here!")
+    );
 
 
 });
 
-database.ref().on("value", function(anyPlayer){
-    console.log("There is a player here!")
+database.ref("players").on("value", function (playerExists) {
+    //I need code that lets the other player know that someone disconnected.
+
 
 });
 
@@ -141,12 +149,18 @@ database.ref().on("value", function(anyPlayer){
 //Stuff to do:
 //Create Logic which is...
 //Paper Beats Rock, Rock Beats Scissors, Scissors Beats Paper
-//Once Player choses the other images disappear
 
 
 //Maybe an if statement checking the alt of the image will do for the logic?
+    //Really basic RPS logic. Need to do something with this.
+    if (a == b) ties++;
+    else if ((a - b + 3) % 3 == 1) wins++;
+    else losses++;
 
-$('.hands').on("click", function(){
+$('.hands').on("click", function () {
+
+
+
 
     $('.hands').hide();
     $(this).show();
@@ -194,15 +208,15 @@ $('.hands').on("click", function(){
 //----------Chat Box----------
 
 //takes the input and pushes it into the database
-$('#chatInput').click(function(e){
+$('#chatInput').click(function (e) {
     e.preventDefault();
 
 
-//Makes a variable which chatText is the input the user does.
+    //Makes a variable which chatText is the input the user does.
 
     var chatText = $('#chatText').val();
 
-//chatdata is the object which is pushed into our database, remember chatdata is our database.ref();
+    //chatdata is the object which is pushed into our database, remember chatdata is our database.ref();
     var chatlog = chatdata.push({ //chatlog is just the name of the variable we empty down below...
         chatText: chatText
     })
@@ -217,16 +231,16 @@ $('#chatInput').click(function(e){
 
 
 //Snapshotting the Chatbox
-database.ref().on("value", function (snapshot){
+database.ref().on("value", function (snapshot) {
     $('#chatbox').text(snapshot.val().chatText)
 
-}, function (errorObject){
+}, function (errorObject) {
     console.log("Errors handled: " + errorObject.code);
 
 });
 
 //Putting the database text into the chatbox.
-chatdata.on("child_added",function(childSnapshot){
-    $('#chatbox').append("<br>"+ childSnapshot.val().chatText)
+chatdata.on("child_added", function (childSnapshot) {
+    $('#chatbox').append("<br>" + childSnapshot.val().chatText)
 
 })
