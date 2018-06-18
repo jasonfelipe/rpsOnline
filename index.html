@@ -14,41 +14,70 @@
         <div class="jumbotron" style="background-color: black; color: white">
             <h1 class="text-center">Rock Paper Scissors Online</h1>
             <h3 class="text-center">The Hardest most Simplest Game</h3>
-        </div>
-
-        <!--Rock Paper Scissors Images-->
-        <div class="row" id="gamebox">
-            <div class="col-md-4">
-                <img class="hands" id="rock" src="assets/images/rock.png" alt="Rock">
-            </div>
-
-            <div class="col-md-4">
-                <img class="hands" id="scissors" src="assets/images/scissors.png" alt="Scissors">
-            </div>
-
-
-            <div class="col-md-4">
-                <img class="hands" id="paper" src="assets/images/paper.png" alt="Paper">
-            </div>
-        </div>
-
-        <!--This Displays information, for example if there is too many players, if player has chosen something, etc-->
-        <div class="row">
-            <div class="col-lg-3" id="instructions">Choose your destiny!</div>
-            <div class="col-lg-3" id="playerChoice"></div>
-            <div class="col-lg-3" id="waiting"></div>
-            <!--User chooses who they are-->
-            <div class="col-lg-3">
-                <button id="playerOne">Player One</button>
-                <button id="playerTwo">Player Two</button>
-
-            </div>
+            <h3 class="text-center" id="maxPlayers">SORRY THERE ARE TOO MANY PLAYERS!</h3>
+            <button id="playerOne">Player One</button>
+            <button id="playerTwo">Player Two</button>
 
         </div>
 
+        <!--Player One Area-->
+        <div class="row" id="playerOneBox">
+            <div class="col-md-4">
+                <img class="hands" id="playerOneRock" src="assets/images/rock.png" alt="Rock">
 
-        <!--Chat Input box-->
-        <div class="row">
+            </div>
+
+            <div class="col-md-4">
+                <img class="hands" id="playerOneScissors" src="assets/images/scissors.png" alt="Scissors">
+
+            </div>
+
+
+            <div class="col-md-4">
+                <img class="hands" id="playerOnePaper" src="assets/images/paper.png" alt="Paper">
+
+            </div>
+        </div>
+
+
+        <!--Player Two Area-->
+        <div class="row" id="playerTwoBox">
+            <div class="col-md-4">
+                <img class="hands" id="playerTwoRock" src="assets/images/rock.png" alt="Rock">
+
+            </div>
+
+            <div class="col-md-4">
+                <img class="hands" id="playerTwoScissors" src="assets/images/scissors.png" alt="Scissors">
+
+            </div>
+
+
+            <div class="col-md-4">
+                <img class="hands" id="playerTwoPaper" src="assets/images/paper.png" alt="Paper">
+
+            </div>
+        </div>
+
+
+        <!--Player One Area-->
+        <div id="pOneInfo" class="row">
+            <div class="col-lg-3" id="pOneInstructions">Choose your destiny!</div>
+            <div class="col-lg-3" id="pOneChoice"></div>
+            <div class="col-lg-3" id="pOneWaiting"></div>
+
+        </div>
+
+        <!--Player Two Area-->
+        <div id="pTwoInfo" class="row">
+            <div class="col-lg-3" id="pTwoInstructions">Choose your destiny!</div>
+            <div class="col-lg-3" id="pTwoChoice"></div>
+            <div class="col-lg-3" id="pTwoWaiting"></div>
+        </div>
+
+
+        <div id="chatscoreBox" class="row">
+            <!--Chat Input box-->
             <div class="col-lg-6">
                 <div id="chatbox"></div>
                 <form>

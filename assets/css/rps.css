@@ -23,7 +23,11 @@ align-content: center;
 
 }
 
-#instructions {
+#pOneInstructions {
+    color: green;
+}
+
+#pTwoInstructions {
     color: green;
 }
 
