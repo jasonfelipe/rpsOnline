@@ -2,7 +2,6 @@
 //With online chat.
 
 
-//1.need to get player data (are u player 1 or 2?)
 //2.need to delete player infomation on refresh(?)
 //3.Need to alert player when other player disconnects/leaves
 //4.need to empty database when player leaves
@@ -10,7 +9,8 @@
 
 
 $(document).ready(function () {
-    //------------------------------------
+    //-----------------------------------------------------------------------
+
     // Initialize Firebase
     var config = {
         apiKey: "AIzaSyBNtVyMKY8oSJe_wQc0KtbJtajG0sz7-nQ",
@@ -21,6 +21,7 @@ $(document).ready(function () {
         messagingSenderId: "314201387785"
     };
     firebase.initializeApp(config);
+    //-----------------------------------------------------------------------
 
     //-------------Variables--------------
 
@@ -44,8 +45,8 @@ $(document).ready(function () {
     var rock = 0;
     var paper = 1;
     var scissors = 2;
-    var player1choice = ("/player1choice"); //stores player choices
-    var player2choice = ("/player2choice");
+    var player1choice = database.ref("/player1choice"); //stores player choices
+    var player2choice = database.ref("/player2choice");
     var player1Picked = null;
     var player2Picked = null;
 
@@ -61,6 +62,7 @@ $(document).ready(function () {
     var player2lossesCount = 0;
     var draw = 0;
 
+    //Stuff to do.
     //Game doesn't start until 2 players show up
 
     $("#playerOneBox").hide();
@@ -70,6 +72,7 @@ $(document).ready(function () {
     $('#chatscoreBox').hide();
     $("#maxPlayers").hide();
 
+    //-----------------------------------------------------------------------
 
 
     //------Connection Status--------
@@ -85,6 +88,8 @@ $(document).ready(function () {
             playerConnect.onDisconnect().remove();
             player1.onDisconnect().remove();
             player2.onDisconnect().remove();
+            player1choice.onDisconnect().remove();
+            player2choice.onDisconnect().remove();
 
 
         }
@@ -120,7 +125,6 @@ $(document).ready(function () {
             }
             else {
                 $('#pOneInstructions').text("You are Player One")
-                $("#gamebox").show();
                 $("#playerOneBox").show();
                 $('#chatscoreBox').show();
                 $('#playerChoice').text("Choose your hand!");
@@ -149,7 +153,6 @@ $(document).ready(function () {
             }
             else {
                 $('#instructions').text("You are Player Two")
-                $("#gamebox").show();
                 $("#playerTwoBox").show();
                 $('#chatscoreBox').show();
                 $('#playerChoice').text("Choose your hand!");
@@ -172,126 +175,195 @@ $(document).ready(function () {
 
 
     });
+    //-----------------------------------------------------------------------
 
-    //-------The Hands----------
+
+    //--------The Hands----------
 
     //Stuff to do:
-    //Create Logic which is...
-    //Paper Beats Rock, Rock Beats Scissors, Scissors Beats Paper
+    //Needa a fix so that the choice is understood based on the IDs of the pictures. 
 
 
+    // $('.hands').on("click", function () {
+    //     if (this.id === "playerOneRock" || "playerOneScissors" || "playerOnePaper") {
+    //         $('#playerOneRock').hide();
+    //         $('#playerOneScissors').hide();
+    //         $('#playerOnePaper').hide();
+    //         $(this).show();
+    //         $('#pOneChoice').text("You Chose " + this.alt + "!");
+    //         $('#pOneWaiting').text("Waiting for Opponent...");
+    //         console.log(this.id)
+    //         player1Picked = this.alt
+    //         console.log("Player One Picked " + this.alt)
+    //     }
+    //     else {
+    //         $('#playerTwoRock').hide();
+    //         $('#playerTwoScissors').hide();
+    //         $('#playerTwoPaper').hide();
+    //         $(this).show();           
+    //         $('#pTwoChoice').text("You Chose " + this.alt + "!");
+    //         $('#pTwoWaiting').text("Waiting for Opponent...");
+    //         console.log(this.id)
+    //         player2Picked = this.alt
+    //         console.log("Player Two Picked " + this.alt)
+    //     }
+    // });
 
-    $('.hands').on("click", function () {
+    //---------------Player One-------------------
 
-        $(this).css("filter:opacity(30%)");
-        $('#pOneChoice').text("You Chose " + this.alt + "!");
+
+    $("#playerOneRock").on("click", function () {
+        console.log(this.id);
+        $('#playerOnePaper').hide();
+        $('#playerOneScissors').hide();
+        $('#pOneChoice').text("You Chose Rock!");
         $('#pOneWaiting').text("Waiting for Opponent...");
-        console.log(this.id)
 
-    if(this.id === "playerOneRock" || "playerOneScissors" || "playerOnePaper"){
-        player1Picked = this.alt
-        console.log("Player One Picked " + this.alt)
-    }       
+        player1Picked = this.alt;
+        player1choice.set({
+            player1Picked
+        });
 
     });
 
 
+    $("#playerOnePaper").on("click", function () {
+        console.log(this.id);
+        $('#playerOneRock').hide();
+        $('#playerOneScissors').hide();
+        $('#pOneChoice').text("You Chose Paper!");
+        $('#pOneWaiting').text("Waiting for Opponent...");
 
-    $('.hands').on("click", function () {
 
-        $(this).css("filter:opacity(30%)");
-        $('#pTwoChoice').text("You Chose " + this.alt + "!");
+        player1Picked = this.alt;
+        player1choice.set({
+            player1Picked
+        });
+
+    });
+
+
+    $("#playerOneScissors").on("click", function () {
+        console.log(this.id);
+        $('#playerOneRock').hide();
+        $('#playerOnePaper').hide();
+        $('#pOneChoice').text("You Chose Scissors!");
+        $('#pOneWaiting').text("Waiting for Opponent...");
+
+
+        player1Picked = this.alt;
+        player1choice.set({
+            player1Picked
+        });
+
+    });
+
+
+    //---------------Player Two-------------------
+
+
+    $("#playerTwoRock").on("click", function () {
+        console.log(this.id);
+        $('#playerTwoPaper').hide();
+        $('#playerTwoScissors').hide();
+        $('#pTwoChoice').text("You Chose Rock!");
         $('#pTwoWaiting').text("Waiting for Opponent...");
-        console.log(this.id)
 
-    if(this.id === "playerTwoRock" || "playerTwoScissors" || "playerTwoPaper"){
-        player2Picked = this.alt
-        console.log("Player Two Picked " + this.alt)
-    }       
+
+        player2Picked = this.alt;
+        player2choice.set({
+            player2Picked
+        });
 
     });
 
-    //Just in case we still need this stuff below....
 
-    // $("#rock").on("click", function (){
-    //     console.log("You Chose Rock")
-    //     $('#paper').hide();
-    //     $('#scissors').hide();
-    //     $('#playerChoice').text("You Chose Rock!");
-    //     $('#waiting').text("Waiting for Opponent...");
-
-
-    // });
+    $("#playerTwoPaper").on("click", function () {
+        console.log(this.id);
+        $('#playerTwoRock').hide();
+        $('#playerTwoScissors').hide();
+        $('#pTwoChoice').text("You Chose Paper!");
+        $('#pTwoWaiting').text("Waiting for Opponent...");
 
 
-    // $("#paper").on("click", function (){
-    //     console.log("You Chose Paper")
-    //     $('#rock').hide();
-    //     $('#scissors').hide();
-    //     $('#playerChoice').text("You Chose Paper!")
-    //     $('#waiting').text("Waiting for Opponent...")
+        player2Picked = this.alt;
+        player2choice.set({
+            player2Picked
+        });
+
+    });
 
 
-    // });
+    $("#playerTwoScissors").on("click", function () {
+        console.log(this.id);
+        $('#playerTwoRock').hide();
+        $('#playerTwoPaper').hide();
+        $('#pTwoChoice').text("You Chose Scissors!");
+        $('#pTwoWaiting').text("Waiting for Opponent...");
 
 
-    // $("#scissors").on("click", function (){
-    //     console.log("You Chose Scissors")
-    //     $('#rock').hide();
-    //     $('#paper').hide();
-    //     $('#playerChoice').text("You Chose Scissors!")
-    //     $('#waiting').text("Waiting for Opponent...")
+        player2Picked = this.alt;
+        player2choice.set({
+            player2Picked
+        });
+
+    });
 
 
-    // });
 
-//Game Logic
+
+    //-----------------------------------------------------------------------
+
+    //Game Logic
     function evaluateChoices() {
-   
-        if (playerOneChoice === "Rock" && playerTwoChoice === "Rock") {
+
+        if (player1Picked === "Rock" && player2Picked === "Rock") {
             tieGame();
-            
+
         }
-    
-        else if (playerOneChoice === "Rock" && playerTwoChoice === "Paper") {
+
+        else if (player1Picked === "Rock" && player2Picked === "Paper") {
             playerOneLoss();
             playerTwoWin();
         }
-    
-        else if (playerOneChoice === "Rock" && playerTwoChoice === "Scissors") {
+
+        else if (player1Picked === "Rock" && player2Picked === "Scissors") {
             playerOneWin();
             playerTwoLoss();
         }
-    
-        else if (playerOneChoice === "Paper" && playerTwoChoice === "Rock") {
+
+        else if (player1Picked === "Paper" && player2Picked === "Rock") {
             playerOneWin();
             playerTwoLoss();
         }
-    
-        else if (playerOneChoice === "Paper" && playerTwoChoice === "Paper") {
+
+        else if (player1Picked === "Paper" && player2Picked === "Paper") {
             tieGame();
-            
+
         }
-    
-        else if (playerOneChoice === "Paper" && playerTwoChoice === "Scissors") {
+
+        else if (player1Picked === "Paper" && player2Picked === "Scissors") {
             playerOneLoss();
             playerTwoWin();
         }
-    
-         else if (playerOneChoice === "Scissors" && playerTwoChoice === "Rock") {
+
+        else if (player1Picked === "Scissors" && player2Picked === "Rock") {
             playerOneLoss();
             playerTwoWin();
         }
-    
-        else if (playerOneChoice === "Scissors" && playerTwoChoice === "Paper") {
+
+        else if (player1Picked === "Scissors" && player2Picked === "Paper") {
             playerOneWin();
             playerTwoLoss();
         }
-    
-        else if (playerOneChoice === "Scissors" && playerTwoChoice === "Scissors") {
+
+        else if (player1Picked === "Scissors" && player2Picked === "Scissors") {
             tieGame();
         }
     }
+
+    //-----------------------------------------------------------------------
+
     //----------Chat Box----------
 
     //takes the input and pushes it into the database
@@ -331,6 +403,7 @@ $(document).ready(function () {
         $('#chatbox').append("<br>" + childSnapshot.val().chatText)
 
     });
+    //-----------------------------------------------------------------------
 
 
 
