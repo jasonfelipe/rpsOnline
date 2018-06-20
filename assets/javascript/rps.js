@@ -67,8 +67,7 @@ $(document).ready(function () {
 
     $("#playerOneBox").hide();
     $("#playerTwoBox").hide();
-    $('#pOneInfo').hide();
-    $('#pTWoInfo').hide();
+    $('#pInfo').hide();
     $('#chatscoreBox').hide();
     $("#maxPlayers").hide();
 
@@ -121,12 +120,13 @@ $(document).ready(function () {
         database.ref().once("value", function (check) {
             if (check.child("players/1").exists() === true) {
                 $('#playerOne').hide();
-                $('#instructions').text("Sorry but Player One is taken!");
+                $('#pInstructions').text("Sorry but Player One is taken!");
             }
             else {
-                $('#pOneInstructions').text("You are Player One")
+                $('#pInstructions').text("You are Player One")
                 $("#playerOneBox").show();
                 $('#chatscoreBox').show();
+                $('#pInfo').show();
                 $('#playerChoice').text("Choose your hand!");
                 $('#chatbox').append("<br>" + "Player One has joined")
                 $('#playerOne').hide();
@@ -149,11 +149,12 @@ $(document).ready(function () {
         database.ref().once("value", function (check) {
             if (check.child("players/2").exists() === true) {
                 $('#playerTwo').hide();
-                $('#pTwoInstructions').text("Sorry but Player Two is taken!");
+                $('#pInstructions').text("Sorry but Player Two is taken!");
             }
             else {
-                $('#instructions').text("You are Player Two")
+                $('#pInstructions').text("You are Player Two")
                 $("#playerTwoBox").show();
+                $('#pInfo').show();
                 $('#chatscoreBox').show();
                 $('#playerChoice').text("Choose your hand!");
                 $('#chatbox').append("<br>" + "Player Two has joined")
@@ -216,8 +217,8 @@ $(document).ready(function () {
         console.log(this.id);
         $('#playerOnePaper').hide();
         $('#playerOneScissors').hide();
-        $('#pOneChoice').text("You Chose Rock!");
-        $('#pOneWaiting').text("Waiting for Opponent...");
+        $('#pChoice').text("You Chose Rock!");
+        $('#pWaiting').text("Waiting for Opponent...");
 
         player1Picked = this.alt;
         player1choice.set({
@@ -231,8 +232,8 @@ $(document).ready(function () {
         console.log(this.id);
         $('#playerOneRock').hide();
         $('#playerOneScissors').hide();
-        $('#pOneChoice').text("You Chose Paper!");
-        $('#pOneWaiting').text("Waiting for Opponent...");
+        $('#pChoice').text("You Chose Paper!");
+        $('#pWaiting').text("Waiting for Opponent...");
 
 
         player1Picked = this.alt;
@@ -247,8 +248,8 @@ $(document).ready(function () {
         console.log(this.id);
         $('#playerOneRock').hide();
         $('#playerOnePaper').hide();
-        $('#pOneChoice').text("You Chose Scissors!");
-        $('#pOneWaiting').text("Waiting for Opponent...");
+        $('#pChoice').text("You Chose Scissors!");
+        $('#pWaiting').text("Waiting for Opponent...");
 
 
         player1Picked = this.alt;
@@ -266,8 +267,8 @@ $(document).ready(function () {
         console.log(this.id);
         $('#playerTwoPaper').hide();
         $('#playerTwoScissors').hide();
-        $('#pTwoChoice').text("You Chose Rock!");
-        $('#pTwoWaiting').text("Waiting for Opponent...");
+        $('#pChoice').text("You Chose Rock!");
+        $('#pWaiting').text("Waiting for Opponent...");
 
 
         player2Picked = this.alt;
@@ -282,8 +283,8 @@ $(document).ready(function () {
         console.log(this.id);
         $('#playerTwoRock').hide();
         $('#playerTwoScissors').hide();
-        $('#pTwoChoice').text("You Chose Paper!");
-        $('#pTwoWaiting').text("Waiting for Opponent...");
+        $('#pChoice').text("You Chose Paper!");
+        $('#pWaiting').text("Waiting for Opponent...");
 
 
         player2Picked = this.alt;
@@ -298,8 +299,8 @@ $(document).ready(function () {
         console.log(this.id);
         $('#playerTwoRock').hide();
         $('#playerTwoPaper').hide();
-        $('#pTwoChoice').text("You Chose Scissors!");
-        $('#pTwoWaiting').text("Waiting for Opponent...");
+        $('#pChoice').text("You Chose Scissors!");
+        $('#pWaiting').text("Waiting for Opponent...");
 
 
         player2Picked = this.alt;

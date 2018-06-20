@@ -23,13 +23,11 @@ align-content: center;
 
 }
 
-#pOneInstructions {
+#pInstructions {
     color: green;
 }
 
-#pTwoInstructions {
-    color: green;
-}
+
 
 .row {
     border: 2px solid black;
