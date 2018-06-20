@@ -224,6 +224,7 @@ $(document).ready(function () {
         player1choice.set({
             player1Picked
         });
+        evaluateChoices();
 
     });
 
@@ -240,6 +241,7 @@ $(document).ready(function () {
         player1choice.set({
             player1Picked
         });
+        evaluateChoices();
 
     });
 
@@ -256,6 +258,7 @@ $(document).ready(function () {
         player1choice.set({
             player1Picked
         });
+        evaluateChoices();
 
     });
 
@@ -275,6 +278,7 @@ $(document).ready(function () {
         player2choice.set({
             player2Picked
         });
+        evaluateChoices();
 
     });
 
@@ -291,6 +295,7 @@ $(document).ready(function () {
         player2choice.set({
             player2Picked
         });
+        evaluateChoices();
 
     });
 
@@ -307,6 +312,7 @@ $(document).ready(function () {
         player2choice.set({
             player2Picked
         });
+        evaluateChoices();
 
     });
 
@@ -317,50 +323,58 @@ $(document).ready(function () {
 
     //Game Logic
     function evaluateChoices() {
+        database.ref().on("value", function (checkChoices){
+        if(checkChoices.child("/player1choice") === true & checkChoices.child("/player2choice") === true){
+            if (player1Picked === "Rock" && player2Picked === "Rock") {
+                console.log("It's a tie");
+            }
 
-        if (player1Picked === "Rock" && player2Picked === "Rock") {
-            tieGame();
+            else if (player1Picked === "Rock" && player2Picked === "Paper") {
+                // playerOneLoss();
+                // playerTwoWin();
+                console.log("P two wins");
+            }
 
+            else if (player1Picked === "Rock" && player2Picked === "Scissors") {
+                // playerOneWin();
+                console.log("P one wins");
+                // playerTwoLoss();
+            }
+
+            else if (player1Picked === "Paper" && player2Picked === "Rock") {
+                console.log("P one wins");
+                // playerOneWin();
+                // playerTwoLoss();
+            }
+
+            else if (player1Picked === "Paper" && player2Picked === "Paper") {
+                console.log("It's a tie");
+
+            }
+
+            else if (player1Picked === "Paper" && player2Picked === "Scissors") {
+                // playerOneLoss();
+                console.log("P two wins");
+                // playerTwoWin();
+            }
+
+            else if (player1Picked === "Scissors" && player2Picked === "Rock") {
+                // playerOneLoss();
+                // playerTwoWin();
+                console.log("P two wins");
+            }
+
+            else if (player1Picked === "Scissors" && player2Picked === "Paper") {
+                console.log("P one wins");
+                // playerOneWin();
+                // playerTwoLoss();
+            }
+
+            else if (player1Picked === "Scissors" && player2Picked === "Scissors") {
+                console.log("It's a tie");
+            }
         }
-
-        else if (player1Picked === "Rock" && player2Picked === "Paper") {
-            playerOneLoss();
-            playerTwoWin();
-        }
-
-        else if (player1Picked === "Rock" && player2Picked === "Scissors") {
-            playerOneWin();
-            playerTwoLoss();
-        }
-
-        else if (player1Picked === "Paper" && player2Picked === "Rock") {
-            playerOneWin();
-            playerTwoLoss();
-        }
-
-        else if (player1Picked === "Paper" && player2Picked === "Paper") {
-            tieGame();
-
-        }
-
-        else if (player1Picked === "Paper" && player2Picked === "Scissors") {
-            playerOneLoss();
-            playerTwoWin();
-        }
-
-        else if (player1Picked === "Scissors" && player2Picked === "Rock") {
-            playerOneLoss();
-            playerTwoWin();
-        }
-
-        else if (player1Picked === "Scissors" && player2Picked === "Paper") {
-            playerOneWin();
-            playerTwoLoss();
-        }
-
-        else if (player1Picked === "Scissors" && player2Picked === "Scissors") {
-            tieGame();
-        }
+    });
     }
 
     //-----------------------------------------------------------------------
