@@ -11,12 +11,12 @@
 <body>
     <div class="container">
         <!--The Jumbotron-->
-        <div class="jumbotron" style="background-color: black; color: white">
+        <div class="jumbotron" style="background-color: paleturquoise; color: rgb(6, 83, 3)">
             <h1 class="text-center">Rock Paper Scissors Online</h1>
             <h3 class="text-center">The Hardest most Simplest Game</h3>
             <h3 class="text-center" id="maxPlayers">SORRY THERE ARE TOO MANY PLAYERS!</h3>
-            <button id="playerOne">Player One</button>
-            <button id="playerTwo">Player Two</button>
+            <button class="btn btn-primary" id="playerOne">Player One</button>
+            <button class="btn btn-danger" id="playerTwo">Player Two</button>
 
         </div>
 
@@ -42,18 +42,18 @@
 
         <!--Player Two Area-->
         <div class="row" id="playerTwoBox">
-            <div class="col-md-4">
+            <div class="col-sm-4">
                 <img class="hands" id="playerTwoRock" src="assets/images/rock.png" alt="Rock">
 
             </div>
 
-            <div class="col-md-4">
+            <div class="col-sm-4">
                 <img class="hands" id="playerTwoScissors" src="assets/images/scissors.png" alt="Scissors">
 
             </div>
 
 
-            <div class="col-md-4">
+            <div class="col-sm-4">
                 <img class="hands" id="playerTwoPaper" src="assets/images/paper.png" alt="Paper">
 
             </div>
@@ -79,7 +79,7 @@
                 <form>
                     <div>
                         <input style="width:450px" type="text" id="chatText" placeholder="Chat here!">
-                        <button id="chatInput" type="submit">Submit</button>
+                        <button style="float:right" class="btn btn-info" id="chatInput" type="submit">Submit</button>
                     </div>
                 </form>
             </div>

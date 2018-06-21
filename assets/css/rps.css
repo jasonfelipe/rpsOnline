@@ -1,6 +1,10 @@
 * {
 align-content: center;
 
+}
+
+body{
+    background-color: peachpuff;
 
 }
 
@@ -16,10 +20,14 @@ align-content: center;
 .hands{
     width: 300px;
     height: 300px;
+    filter: invert(100%);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .hands:hover {
-    filter: invert(100%);
+    filter: invert(0%);
 
 }
 
