@@ -1,107 +1,39 @@
 <!DOCTYPE html>
 
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+        integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="assets/css/rps.css">
 
 </head>
 
+
+
 <body>
-    <div class="container">
-        <!--The Jumbotron-->
-        <div class="jumbotron" style="background-color: paleturquoise; color: rgb(6, 83, 3)">
-            <h1 class="text-center">Rock Paper Scissors Online</h1>
-            <h3 class="text-center">The Hardest most Simplest Game</h3>
-            <h3 class="text-center" id="maxPlayers">SORRY THERE ARE TOO MANY PLAYERS!</h3>
-            <button class="btn btn-primary" id="playerOne">Player One</button>
-            <button class="btn btn-danger" id="playerTwo">Player Two</button>
-
-        </div>
-
-        <!--Player One Area-->
-        <div class="row" id="playerOneBox">
-            <div class="col-md-4">
-                <img class="hands" id="playerOneRock" src="assets/images/rock.png" alt="Rock">
-
-            </div>
-
-            <div class="col-md-4">
-                <img class="hands" id="playerOneScissors" src="assets/images/scissors.png" alt="Scissors">
-
-            </div>
-
-
-            <div class="col-md-4">
-                <img class="hands" id="playerOnePaper" src="assets/images/paper.png" alt="Paper">
-
-            </div>
-        </div>
-
-
-        <!--Player Two Area-->
-        <div class="row" id="playerTwoBox">
-            <div class="col-sm-4">
-                <img class="hands" id="playerTwoRock" src="assets/images/rock.png" alt="Rock">
-
-            </div>
-
-            <div class="col-sm-4">
-                <img class="hands" id="playerTwoScissors" src="assets/images/scissors.png" alt="Scissors">
-
-            </div>
-
-
-            <div class="col-sm-4">
-                <img class="hands" id="playerTwoPaper" src="assets/images/paper.png" alt="Paper">
-
-            </div>
-        </div>
-
-
-        <!--Player Area-->
-        <div id="pInfo" class="row">
-            <div class="col-lg-3" id="pInstructions">Choose your destiny!</div>
-            <div class="col-lg-3" id="pChoice"></div>
-            <div class="col-lg-3" id="pWaiting"></div>
-
-
-        </div>
-
-
-
-
-        <div id="chatscoreBox" class="row">
-            <!--Chat Input box-->
-            <div class="col-lg-6">
-                <div id="chatbox"></div>
-                <form>
-                    <div>
-                        <input style="width:450px" type="text" id="chatText" placeholder="Chat here!">
-                        <button style="float:right" class="btn btn-info" id="chatInput" type="submit">Submit</button>
-                    </div>
-                </form>
-            </div>
-
-
-
-            <!--The Score box-->
-            <div class="col-lg-3" id="player1score">
-                <div id="player1wins">Player 1 Wins: 0</div>
-                <div id="player1losses">Player 1 Losses: 0</div>
-                <div id="draw">Draws: 0</div>
-            </div>
-            <div class="col-lg-3" id="player2score">
-                <div id="player2wins">Player 2 Wins: 0</div>
-                <div id="player2losses">Player 2 Losses: 0</div>
-            </div>
-        </div>
-
-
-
+    <h1 id='player-count'>PLAYERS: 0</h1>
+    <div class='title'>
+        <h1>
+            Choose!
+        </h1>
     </div>
-    <!--scripts-->
+
+
+    <div class='choices'>
+        <button>Rock</button>
+        <button>Paper</button>
+        <button>Scissors</button>
+    </div>
+
+
+    <div id='scoreboard'>
+        <h1>
+            Score!
+        </h1>
+        <div id='wins'></div>
+        <div id='losses'></div>
+        <div id='ties'></div>
+    </div>
     <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="assets/javascript/rps.js"></script>
