@@ -11,28 +11,37 @@
 
 
 <body>
-    <h1 id='player-count'>PLAYERS: 0</h1>
-    <div class='title'>
-        <h1>
-            Choose!
-        </h1>
-    </div>
+    <h3 id='player-count'>Checking...</h1>
+    <h3 id='player-position'>You are Player #0</h1>
+    <h1 id='info'>
+        Choose!
+    </h1>
 
 
     <div class='choices'>
-        <button>Rock</button>
-        <button>Paper</button>
-        <button>Scissors</button>
+        <button >Rock</button>
+        <button >Paper</button>
+        <button >Scissors</button>
     </div>
 
+    <div id='info'>
+        <div>
+            <div id='player-choice'></div>
+        </div>
+
+        <div>
+            <div id='opponent-choice'></div>
+        </div>
+
+    </div>
 
     <div id='scoreboard'>
-        <h1>
-            Score!
-        </h1>
-        <div id='wins'></div>
-        <div id='losses'></div>
-        <div id='ties'></div>
+        <h3>
+            The Scoreboard
+        </h3>
+        <div id='wins'>Wins: 0</div>
+        <div id='losses'>Losses: 0</div>
+        <div id='ties'>Ties: 0</div>
     </div>
     <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
